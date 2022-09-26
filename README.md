@@ -111,8 +111,28 @@ model User {
 }
 ```
 
-작성후
+작성후 db 업로드
 
 ```
 > npx prisma db push
+```
+
+웹클라이언트 실행
+
+```
+> npx prisma studio
+```
+
+DB에 데이터 추가
+client.user.create() 함수를 이용하여 추가
+클라이언트 환경에서 (X)
+서버 환경에서 해야함으로 API를 이용 (pages/api/addUser.ts 참고)
+
+패치(데이터 불러오기)
+
+```
+fetch("/api/allUser")
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+  }, []);
 ```
