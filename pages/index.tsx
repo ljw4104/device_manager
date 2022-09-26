@@ -7,7 +7,7 @@ import Counter from "../components/Counter";
 const Home: NextPage = () => {
   return (
     <>
-      <Counter title="카운터"></Counter>
+      <Counter title={[1, 2, 3, 4, 5, 6]}></Counter>
     </>
   );
 };

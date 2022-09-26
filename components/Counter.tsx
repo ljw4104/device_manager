@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-interface CounterProps {
-  title: String;
+interface props {
+  title: string | number | Number[];
   subtitle?: String;
 }
-export default function Counter(props: CounterProps) {
+
+export default function Counter(props: props) {
   const [count, setCount] = useState(0);
   function up() {
     setCount(count + 1);
@@ -12,6 +13,7 @@ export default function Counter(props: CounterProps) {
   return (
     <>
       <div>카운터</div>
+      <h1>{props.title.toString()}</h1>
       <div>
         <h1>카운터 {count}</h1>
         <button className="" onClick={up}>
