@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+  @apply dark:bg-[#2CDD96] dark:hover:bg-[#0f9e65] bg-[#6DB9FF] hover:bg-[#348acc] hover:text-white cursor-pointer;
+}
