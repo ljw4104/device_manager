@@ -11,19 +11,53 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  age      Int
-  addr     String
-  favFood  String?  @default("없음")
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  name    String
+  age     Int
+  addr    String
+  favFood String? @default("없음")
+
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
 
 model Post {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  title    String
-  body     String
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  title String
+  body  String
+
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
+}
+
+enum DeviceType {
+  TEMP
+  HUMI
+  CO2
+}
+
+model Device {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  location String     @default("거실")
+  product  String
+  type     DeviceType
+  unit     String
+  memo     String?
+
+  sencingarr Sencing[]
+}
+
+model Sencing {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  value    Float
+  Device   Device? @relation(fields: [deviceId], references: [id])
+  deviceId String? @db.ObjectId
 }

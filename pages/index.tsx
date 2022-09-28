@@ -1,8 +1,18 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import Layout from "../components/Layout";
+import { Device } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
+  const [allDevice, setAllDevice] = useState<Device[]>([]);
+
+  useEffect(() => {
+    fetch(`/api/device/all`)
+      .then((res) => res.json())
+      .then((json) => setAllDevice(json.allDevice));
+  }, []);
+
   return (
     <>
       <Layout title="HOME">
@@ -39,7 +49,7 @@ const Home: NextPage = () => {
             <div>실시간 버튼 자리</div>
           </div>
           <div id="센서목록" className="mt-8 flex flex-wrap">
-            {[1, 1, 1, 1, 1, 1, 1].map((device, idx) => {
+            {allDevice.map((device, idx) => {
               return (
                 <div
                   key={idx}
@@ -47,14 +57,19 @@ const Home: NextPage = () => {
                   className="bg-[#9cd4ff] dark:bg-[#17a76d] m-5 shadow-lg w-60 h-52 p-4 flex flex-col justify-between rounded-xl"
                 >
                   <div className="flex justify-end items-end">
-                    <span className="text-4xl font-bold">측정단위</span>
-                    <span className="">%</span>
+                    <span className="text-4xl font-bold">{"센싱"}</span>
+                    <span className="">{device.unit}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="dark:text-gray-200 text-gray-500">
-                      메모
+                    <span className="dark:text-gray-200 text-gray-600">
+                      {device.type}
                     </span>
-                    <span className=" text-3xl font-bold">로케이션</span>
+                    <span className="dark:text-gray-200 text-gray-500">
+                      {device.memo}
+                    </span>
+                    <span className=" text-3xl font-bold">
+                      {device.location}
+                    </span>
                   </div>
                 </div>
               );

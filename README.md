@@ -136,3 +136,28 @@ fetch("/api/allUser")
       .then((json) => console.log(json));
   }, []);
 ```
+
+schema.prisma 에 타입을 데이터 테이블명[] 으로 지정하면 자동으로 관계형 데이터 베이스로 연결해준다.
+
+```
+model Device {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  sencingarr Sencing[]
+}
+
+model Sencing {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+
+  value    Float
+  Device   Device? @relation(fields: [deviceId], references: [id])
+  deviceId String? @db.ObjectId
+}
+
+```
+
+위처럼 센싱[] 으로 타입을 지정해주면 센싱 테이블에서 자동으로 관계형 데이터 베이스로 연결해준다
