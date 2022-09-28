@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { Device } from "@prisma/client";
-import { join } from "path";
 import { json } from "stream/consumers";
 
 const Home: NextPage = () => {
@@ -14,13 +13,18 @@ const Home: NextPage = () => {
   const [errorMesage, setErrorMesage] = useState(""); //에러메세지
   const [allDevice, setAllDevice] = useState<Device[]>([]);
 
-  function togleNewDevice() {
-    //add 디바이스 클릭시 초기화
-    document.querySelector("#add_Device_container")?.classList.toggle("hidden");
+  function clear() {
     setLocation("");
     setProduct("");
     setUnit("");
     setMemo("");
+    setType("");
+    setErrorMesage("");
+  }
+  function togleNewDevice() {
+    //add 디바이스 클릭시 초기화
+    document.querySelector("#add_Device_container")?.classList.toggle("hidden");
+    clear();
   }
 
   //<select change
@@ -56,14 +60,35 @@ const Home: NextPage = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        if (json.ok) {
+          console.log(json);
+          document
+            .querySelector("#add_Device_container")
+            ?.classList.toggle("hidden");
+          clear();
+          const tempArr = [...allDevice, json.newDevice];
+          setAllDevice(tempArr);
+        } else {
+          setErrorMesage("등록에 실패했습니다.");
+        }
+      });
   }
   //: React.MouseEvent<HTMLButtonElement
   function delDevice(e: string) {
     if (!e) return alert("아이디 없음");
     fetch(`/api/device/del/${e}`)
       .then((res) => res.json())
-      .then((json) => console.log(json));
+      .then((json) => {
+        console.log(json);
+        if (json.ok === true) {
+          console.log(json.delDevice);
+          const tempArr = allDevice.filter(
+            (Device) => Device.id !== json.delDevice
+          );
+          setAllDevice(tempArr);
+        }
+      });
   }
 
   useEffect(() => {
@@ -175,6 +200,13 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div data-comment="장비삭제메뉴">
+            <h2 className="text-3xl font-bold">장치목록</h2>
+
+            {0 < allDevice.length ? null : (
+              <h2 className=" text-center text-xl mt-2 text-red-500">
+                장치를 등록해주세요
+              </h2>
+            )}
             <div>
               {allDevice.map((device, idx) => (
                 <div

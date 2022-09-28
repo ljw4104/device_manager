@@ -3,6 +3,7 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import { Device } from "@prisma/client";
 import { useEffect, useState } from "react";
+import DeviceCard from "../components/DeviceCard";
 
 const Home: NextPage = () => {
   const [allDevice, setAllDevice] = useState<Device[]>([]);
@@ -50,29 +51,7 @@ const Home: NextPage = () => {
           </div>
           <div id="센서목록" className="mt-8 flex flex-wrap">
             {allDevice.map((device, idx) => {
-              return (
-                <div
-                  key={idx}
-                  data-comment="장비카드"
-                  className="bg-[#9cd4ff] dark:bg-[#17a76d] m-5 shadow-lg w-60 h-52 p-4 flex flex-col justify-between rounded-xl"
-                >
-                  <div className="flex justify-end items-end">
-                    <span className="text-4xl font-bold">{"센싱"}</span>
-                    <span className="">{device.unit}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="dark:text-gray-200 text-gray-600">
-                      {device.type}
-                    </span>
-                    <span className="dark:text-gray-200 text-gray-500">
-                      {device.memo}
-                    </span>
-                    <span className=" text-3xl font-bold">
-                      {device.location}
-                    </span>
-                  </div>
-                </div>
-              );
+              return <DeviceCard key={idx} device={device}></DeviceCard>;
             })}
           </div>
         </div>
