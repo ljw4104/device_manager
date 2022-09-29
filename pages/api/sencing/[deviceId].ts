@@ -21,14 +21,21 @@ export default async function handler(
     });
   }
   if (request.method === "POST") {
+    console.log(request.body);
     const value = JSON.parse(request.body);
-    console.log(value);
-    // const d = await client.device.create({
-    //   data: {
-    //     email: 'elsa@prisma.io',
-    //     name: 'Elsa Prisma',
-    //   },
-    // })
+    console.log(value, deviceId);
+    try {
+      const d = await client.sencing.create({
+        data: {
+          value: value,
+          deviceId: deviceId.toString(),
+        },
+      });
+      return response.status(200).json({ ok: true });
+    } catch (err) {
+      console.log({ err });
+      return response.status(200).json({ ok: false, error: `${err}` });
+    }
   }
 
   try {
