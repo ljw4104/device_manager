@@ -6,7 +6,7 @@ interface deviceCardProps {
   device: Device;
   realTime: boolean;
 }
-export default function deviceCard({ device, realTime }: deviceCardProps) {
+export default function DeviceCard({ device, realTime }: deviceCardProps) {
   const [value, setValue] = useState(-1);
   const [timerId, setTimerId] = useState<NodeJS.Timer>();
 
@@ -30,6 +30,7 @@ export default function deviceCard({ device, realTime }: deviceCardProps) {
       clearInterval(timerId);
     }
   }, [realTime]);
+
   useEffect(() => {
     sencingDataUp();
   }, []);
