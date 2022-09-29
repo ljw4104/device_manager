@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <div className="h-[80vh] overflow-y-scroll p-6 overflow-auto">
           <div id="웰컴메세지" className=" flex justify-between items-center">
             <div>
-              <div className="text-4xl font-bold">Hello HOME 🖐</div>
+              <div className="text-4xl font-bold">Hello LJW 🖐</div>
               <div className="text-gray-400">Welcome HOME</div>
             </div>
             <Link href={"/setting"}>
