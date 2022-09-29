@@ -37,5 +37,7 @@ export default async function handler(
     res.status(200).json({ ok: true });
   } catch (err) {
     res.status(200).json({ ok: false, err: `${err}` });
+  } finally {
+    client.$disconnect();
   }
 }

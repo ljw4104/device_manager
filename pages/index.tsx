@@ -4,9 +4,19 @@ import Layout from "../components/Layout";
 import { Device } from "@prisma/client";
 import { useEffect, useState } from "react";
 import DeviceCard from "../components/DeviceCard";
+import { fail } from "assert";
+import {
+  MoonLoader,
+  PacmanLoader,
+  RingLoader,
+  RotateLoader,
+} from "react-spinners";
 
 const Home: NextPage = () => {
   const [allDevice, setAllDevice] = useState<Device[]>([]);
+  const [r, setr] = useState(false);
+
+  function toggle() {}
 
   useEffect(() => {
     fetch(`/api/device/all`)
@@ -17,6 +27,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Layout title="HOME">
+        <div className="ml-20"></div>
         <div className="h-[80vh] overflow-y-scroll p-6 overflow-auto">
           <div id="웰컴메세지" className=" flex justify-between items-center">
             <div>
@@ -51,7 +62,13 @@ const Home: NextPage = () => {
           </div>
           <div id="센서목록" className="mt-8 flex flex-wrap">
             {allDevice.map((device, idx) => {
-              return <DeviceCard key={idx} device={device}></DeviceCard>;
+              return (
+                <DeviceCard
+                  key={idx}
+                  device={device}
+                  realTime={false}
+                ></DeviceCard>
+              );
             })}
           </div>
         </div>

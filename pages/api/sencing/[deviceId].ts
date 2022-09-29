@@ -20,6 +20,16 @@ export default async function handler(
       error: "장치 ID를 입력해주세요",
     });
   }
+  if (request.method === "POST") {
+    const value = JSON.parse(request.body);
+    console.log(value);
+    // const d = await client.device.create({
+    //   data: {
+    //     email: 'elsa@prisma.io',
+    //     name: 'Elsa Prisma',
+    //   },
+    // })
+  }
 
   try {
     const result = await client.sencing.findFirst({
@@ -33,10 +43,11 @@ export default async function handler(
         createAt: "desc",
       },
     });
-    console.log(result?.value);
 
     response.status(200).json({ ok: true, value: result?.value });
   } catch (err) {
     response.status(200).json({ ok: false, error: `${err}` });
+  } finally {
+    client.$disconnect();
   }
 }

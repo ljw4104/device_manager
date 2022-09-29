@@ -20,5 +20,7 @@ export default async function handler(
     response.status(200).json({ ok: true, allDevice });
   } catch (err) {
     response.status(200).json({ ok: false, error: `${err}` });
+  } finally {
+    client.$disconnect();
   }
 }

@@ -4,13 +4,34 @@ import { json } from "stream/consumers";
 
 interface deviceCardProps {
   device: Device;
+  realTime: boolean;
 }
-export default function deviceCard({ device }: deviceCardProps) {
+export default function deviceCard({ device, realTime }: deviceCardProps) {
   const [value, setValue] = useState(-1);
-  useEffect(() => {
+  const [timerId, setTimerId] = useState<NodeJS.Timer>();
+
+  function sencingDataUp() {
     fetch(`/api/sencing/${device.id}`)
       .then((res) => res.json())
       .then((json) => setValue(json.value));
+  }
+
+  useEffect(() => {
+    if (realTime === true) {
+      //타이머 실행
+      const tempTimerId = setInterval(() => {
+        sencingDataUp();
+        console.log("실시간 on");
+      }, 3000);
+
+      setTimerId(tempTimerId);
+    } else {
+      //타이머 끄기
+      clearInterval(timerId);
+    }
+  }, [realTime]);
+  useEffect(() => {
+    sencingDataUp();
   }, []);
 
   return (
