@@ -5,7 +5,7 @@ import { cls } from "../libs/client/utils";
 
 interface layoutProps {
   title: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export default function Counter(props: layoutProps) {
@@ -137,6 +137,23 @@ export default function Counter(props: layoutProps) {
                     </svg>
                   </div>
                   <div className="font-bold text-lg">SETTING</div>
+                </div>
+              </div>
+            </Link>
+            <Link href={"/chungnam"}>
+              <div
+                className={cls(
+                  " cursor-pointer hover:bg-[#48b0ff] dark:hover:bg-[#0a7c4f] hover:text-slate-100 w-full flex items-center justify-center ",
+                  router.pathname === "/setting"
+                    ? "bg-[#72BFF9] dark:bg-[#2CDD96]"
+                    : " "
+                )}
+              >
+                <div>
+                  <div className="text-3xl flex justify-center items-center">
+                    🐱‍🏍
+                  </div>
+                  <div className="font-bold text-lg">충남</div>
                 </div>
               </div>
             </Link>

@@ -20,7 +20,6 @@ const Home: NextPage = () => {
 
   function inputdata(id: string) {
     console.log(id);
-    const data = { id, value };
     fetch(`api/sencing/${id}`, { method: "POST", body: JSON.stringify(value) });
   }
 
